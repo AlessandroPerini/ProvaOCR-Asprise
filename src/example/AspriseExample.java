@@ -21,7 +21,7 @@ public class AspriseExample {
         Ocr.setUp(); // one time setup
         Ocr ocr = new Ocr(); // create a new OCR engine
         ocr.startEngine("eng", Ocr.SPEED_FASTEST); // English
-        System.out.println("Converting...\n");
+        System.out.println("Processing...\n");
         String s = ocr.recognize(new File[] {new File("src/file/test.pdf")}, Ocr.RECOGNIZE_TYPE_ALL, Ocr.OUTPUT_FORMAT_PLAINTEXT);
         System.out.println("Result: \n\n" + s);
         // ocr more images here ...
