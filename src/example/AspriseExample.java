@@ -1,32 +1,44 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package provaocr.example;
 
 import com.asprise.ocr.Ocr;
 import java.io.File;
+import utils.Supporto;
 /**
  *
  * @author aless
  */
 public class AspriseExample {
-
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) {
+        
+        Supporto prova = new Supporto("Prova");
+        prova.timerStart();
+        int i;
+        String estensione[] = {"","png","jpg","tif","tif","tif","tif","png",
+                                  "jpg","jpg","png","jpg","jpg","jpg","tif",
+                                  "tif","png","gif","gif","png","png"};
         
         Ocr.setUp(); // one time setup
         Ocr ocr = new Ocr(); // create a new OCR engine
-        ocr.startEngine("eng", Ocr.SPEED_FASTEST); // English
-        System.out.println("Processing...\n");
-        String s = ocr.recognize(new File[] {new File("src/file/test.pdf")}, Ocr.RECOGNIZE_TYPE_ALL, Ocr.OUTPUT_FORMAT_PLAINTEXT);
-        System.out.println("Result: \n\n" + s);
-        // ocr more images here ...
+        ocr.startEngine("eng", Ocr.SPEED_FAST); 
+        
+        Supporto supporto = new Supporto("Asprise");
+        
+        for (i = 1; i < 21; i++) {
+            
+            String file = "C:\\Users\\aless\\Desktop\\scanned_doc\\dir"+i+"\\img"+i+"."+estensione[i];
+            
+            supporto.timerStart();
+            String result = ocr.recognize(new File[] {new File(file)}, Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
+            supporto.timerStop();
+                        
+            supporto.fileOut(file, result);
+            
+            System.out.println(file);
+        }
+        
         ocr.stopEngine();
-
+        System.out.println("\nTempo totale: "+prova.timerStop());
     }
     
 }
